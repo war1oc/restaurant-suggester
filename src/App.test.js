@@ -1,9 +1,28 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
+import React from 'react'
+import { shallow } from 'enzyme'
 
-it('renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<App />, div);
-  ReactDOM.unmountComponentAtNode(div);
-});
+import { App } from './App'
+
+function setup() {
+  const props = {
+    ui: {
+      location : { lat: 35.648795, lng: 139.7000483 },
+      isLoading: false,
+      error    : {}
+    }
+  }
+
+  const enzymeWrapper = shallow(<App {...props}/>)
+
+  return {
+    props,
+    enzymeWrapper
+  }
+}
+
+describe('<App/>', () => {
+  it('renders a map component', () => {
+    const { enzymeWrapper } = setup()
+    expect(enzymeWrapper.exists('Map')).toEqual(true)
+  });
+})

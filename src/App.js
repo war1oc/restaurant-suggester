@@ -1,28 +1,39 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
-class App extends Component {
+import Map from './components/Map/Map'
+
+/**
+ * App component
+ */
+export class App extends Component {
+  static propTypes = {
+    ui: PropTypes.object.isRequired
+  }
+
+  static defaultProps = {
+    ui: {}
+  }
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div>
+        <Map
+          location  = {this.props.ui.location}
+          isLoading = {this.props.ui.isLoading}
+        />
       </div>
-    );
+    )
   }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    ui: state.uiStore
+  }
+}
+
+export default connect(
+  mapStateToProps
+)(App)

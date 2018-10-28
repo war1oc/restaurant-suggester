@@ -47,9 +47,8 @@ export default class Marker extends Component {
             position    = {position}
             targetRect  = {targetRect}
             popoverRect = {popoverRect}
-            arrowColor  = {'#03A9F4'}
+            arrowColor  = {'white'}
             arrowSize   = {10}
-            arrowStyle  = {{ opacity: 0.8 }}
           >
             <div
               className = 'popover'

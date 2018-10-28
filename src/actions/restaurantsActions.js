@@ -1,20 +1,12 @@
-import axios from 'axios'
-
 import {
   FETCH_RESTAURANTS_REQUEST,
   FETCH_RESTAURANTS_SUCCESS,
   FETCH_RESTAURANTS_FAILURE,
-  SELECT_RESTAURANT
+  SELECT_RESTAURANT,
+  SUGGEST_RESTAURANT
 } from './actionTypes'
-import {
-  API_URL,
-  CLIENT_ID,
-  CLIENT_SECRET,
-  API_VERSION,
-  CATEGORY_ID,
-  SECTION,
-  RADIUS,
-} from '../constants/foursquare'
+
+import { fetchNearbyRestaurants } from '../services/restaurants'
 
 /**
  * Request restaurants action
@@ -28,7 +20,7 @@ export const requestRestaurants = (payload={}) => ({type: FETCH_RESTAURANTS_REQU
  * @param {Object} payload
  * @returns {{type: string, payload: {}}}
  */
-export const successFetchRestaurants = (payload={}) => ({type: FETCH_RESTAURANTS_SUCCESS, payload})
+export const successFetchRestaurants = (payload=[]) => ({type: FETCH_RESTAURANTS_SUCCESS, payload})
 
 /**
  * Fetch restaurants error action
@@ -45,27 +37,41 @@ export const errorFetchRestaurants = (payload={}) => ({type: FETCH_RESTAURANTS_F
 export const selectRestaurant = (payload={}) => ({type: SELECT_RESTAURANT, payload});
 
 /**
- * Fetch restaurants action
+ * Suggest restaurant action
+ * @param {Object} payload
+ * @returns {{type: string, payload: {}}}
+ */
+export const suggestRestaurant = (payload={}) => ({type: SUGGEST_RESTAURANT, payload});
+
+/**
+ * Suggest restaurant action
  * @param {Object} location { lat, lng }
  * @returns {{type: string, payload: {}}}
  */
-export function fetchRestaurants(location, keyword) {
+export function fetchRestaurantSuggestion(location) {
   return async dispatch => {
     dispatch(requestRestaurants())
     try {
-      const response = await axios.get(`${API_URL}/search`, {
-        params: {
-          client_id    : CLIENT_ID,
-          client_secret: CLIENT_SECRET,
-          v            : API_VERSION,
-          radius       : RADIUS,
-          ll           : `${location.lat},${location.lng}`,
-          section      : SECTION,
-          query        : keyword,
-          categoryId   : CATEGORY_ID
-        }
-      })
-      const restaurants = response.data.response.venues
+      const restaurants         = await fetchNearbyRestaurants(location)
+      const suggestedRestaurant = restaurants[Math.floor(Math.random()*restaurants.length)];
+      return dispatch(suggestRestaurant(suggestedRestaurant))
+    } catch (err) {
+      return dispatch(errorFetchRestaurants(err))
+    }
+  }
+}
+
+/**
+ * Search restaurants action
+ * @param {Object} location { lat, lng }
+ * @param {string} keyword Search keyword
+ * @returns {{type: string, payload: {}}}
+ */
+export function searchRestaurants(location, keyword) {
+  return async dispatch => {
+    dispatch(requestRestaurants())
+    try {
+      const restaurants = await fetchNearbyRestaurants(location, keyword)
       return dispatch(successFetchRestaurants(restaurants))
     } catch (err) {
       return dispatch(errorFetchRestaurants(err))

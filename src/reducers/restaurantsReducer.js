@@ -1,6 +1,7 @@
 import {
   FETCH_RESTAURANTS_SUCCESS,
-  SELECT_RESTAURANT
+  SELECT_RESTAURANT,
+  SUGGEST_RESTAURANT
 } from '../actions/actionTypes'
 
 const initialState = {
@@ -25,6 +26,11 @@ export default function restaurantsReducer(state = initialState, action) {
       })
     case SELECT_RESTAURANT: 
       return Object.assign({}, state, {
+        selectedRestaurant: action.payload
+      })
+    case SUGGEST_RESTAURANT: 
+      return Object.assign({}, state, {
+        restaurants       : [action.payload],
         selectedRestaurant: action.payload
       })
     default: 

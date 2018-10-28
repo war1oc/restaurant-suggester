@@ -9,7 +9,8 @@ function setup() {
       location : { lat: 35.648795, lng: 139.7000483 },
       isLoading: false,
       error    : {}
-    }
+    },
+    fetchRestaurantSuggestion: jest.fn
   }
 
   const enzymeWrapper = shallow(<App {...props}/>)

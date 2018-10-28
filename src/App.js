@@ -2,9 +2,10 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import { fetchRestaurants, selectRestaurant } from './actions/restaurantsActions'
+import { fetchRestaurantSuggestion, searchRestaurants, selectRestaurant } from './actions/restaurantsActions'
 
 import Map from './components/Map/Map'
+import Search from './components/Search/Search'
 
 /**
  * App component
@@ -23,12 +24,15 @@ export class App extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchRestaurants(this.props.ui.location);
+    this.props.fetchRestaurantSuggestion(this.props.ui.location)
   }
 
   render() {
     return (
       <div>
+        <Search
+          location = {this.props.ui.location}
+          onChange = {this.props.searchRestaurants}/>
         <Map
           location           = {this.props.ui.location}
           isLoading          = {this.props.ui.isLoading}
@@ -51,8 +55,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchRestaurants: (payload) => dispatch(fetchRestaurants(payload)),
-    selectRestaurant: (payload) => dispatch(selectRestaurant(payload))
+    fetchRestaurantSuggestion: (location) => dispatch(fetchRestaurantSuggestion(location)),
+    searchRestaurants        : (location, keyword) => dispatch(searchRestaurants(location, keyword)),
+    selectRestaurant         : (restaurant) => dispatch(selectRestaurant(restaurant))
   }
 }
 

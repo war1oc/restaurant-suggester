@@ -1,0 +1,16 @@
+.marker {
+  position        : relative;
+  width           : 1rem;
+  height          : 1rem;
+  background-color: #03A9F4;
+  transform       : translate(-50%, -50%);
+  border-radius   : 100%;
+  cursor          : pointer;
+}
+
+.popover {
+  background-color: #03A9F4;
+  color           : white;
+  opacity         : 0.8;
+  padding         : 1rem;
+}

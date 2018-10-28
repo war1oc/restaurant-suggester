@@ -1,4 +1,8 @@
-import ActionTypes from '../constants/actions'
+import {
+  FETCH_RESTAURANTS_REQUEST,
+  FETCH_RESTAURANTS_SUCCESS,
+  FETCH_RESTAURANTS_FAILURE
+} from '../actions/actionTypes'
 
 const initialState = {
   location : { lat: 35.648795, lng: 139.7000483 },
@@ -8,28 +12,28 @@ const initialState = {
 
 /**
  * UI reducer
- * 
+ *
  * For managing UI state.
- * 
+ *
  * @param state
  * @param action
  * @returns {Object}
  */
 export default function uiReducer(state = initialState, action) {
   switch (action.type) {
-    case ActionTypes.FETCH_RESTAURANTS_REQUEST: 
+    case FETCH_RESTAURANTS_REQUEST: 
       state = {
         ...state,
         isLoading: true
       };
       break;
-    case ActionTypes.FETCH_RESTAURANTS_SUCCESS: 
+    case FETCH_RESTAURANTS_SUCCESS: 
       state = {
         ...state,
         isLoading: false
       };
       break;
-    case ActionTypes.FETCH_RESTAURANTS_ERROR: 
+    case FETCH_RESTAURANTS_FAILURE: 
       state = {
         ...state,
         error    : action.payload.error,

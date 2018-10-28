@@ -1,2 +1,2 @@
-export const ZOOM_LEVEL = 17;
-export const API_KEY = 'YOUR_API_KEY';
+export const DEFAULT_ZOOM_LEVEL = 15
+export const API_KEY = 'API_KEY'

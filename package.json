@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "axios": "^0.18.0",
     "enzyme": "^3.7.0",
     "enzyme-adapter-react-16": "^1.6.0",
     "google-map-react": "^1.0.9",
@@ -10,6 +11,7 @@
     "react-dom": "^16.6.0",
     "react-redux": "^5.1.0",
     "react-scripts": "2.0.5",
+    "react-tiny-popover": "^3.4.2",
     "redux": "^4.0.1",
     "redux-devtools-extension": "^2.13.5",
     "redux-logger": "^3.0.6",
